@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title id="page-title">Pizza Web | Real Crust, Real Taste</title>
+  <meta id="meta-desc" name="description" content="Crafted with quality ingredients, daily kneaded dough, rich tomato sauce, and 100% genuine mozzarella.">
+  <meta id="meta-keywords" name="keywords" content="pizza, artisan pizza, food delivery, pizza restaurant, takeaway pizza">
+  <meta id="meta-author" name="author" content="Pizza Web">
+  <meta id="meta-robots" name="robots" content="index, follow">
+  <link id="canonical-url" rel="canonical" href="">
+  <link id="page-favicon" rel="icon" type="image/x-icon" href="https://mjlexamazzlswgulbklc.supabase.co/storage/v1/object/public/menu-images/logo.jpg">
+  <meta id="meta-theme-color" name="theme-color" content="#e63946">
+
+  <!-- OpenGraph & Twitter Meta Tags -->
+  <meta id="og-title" property="og:title" content="Pizza Web">
+  <meta id="og-desc" property="og:description" content="Crafted with quality ingredients, daily kneaded dough, rich tomato sauce, and 100% genuine mozzarella.">
+  <meta id="og-image" property="og:image" content="https://mjlexamazzlswgulbklc.supabase.co/storage/v1/object/public/menu-images/logo.jpg">
+  <meta id="og-url" property="og:url" content="">
+  <meta property="og:type" content="website">
+  <meta id="og-site-name" property="og:site_name" content="Pizza Web">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta id="twitter-title" name="twitter:title" content="Pizza Web">
+  <meta id="twitter-desc" name="twitter:description" content="Crafted with quality ingredients, daily kneaded dough, rich tomato sauce, and 100% genuine mozzarella.">
+  <meta id="twitter-image" name="twitter:image" content="https://mjlexamazzlswgulbklc.supabase.co/storage/v1/object/public/menu-images/logo.jpg">
+
+  <!-- JSON-LD Structured Data Container -->
+  <script id="json-ld-schema" type="application/ld+json"></script>
+
+  <!-- FontAwesome & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Supabase JS Client Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <link rel="stylesheet" href="style.css">
+  
+<style>
+
+    /* Logo Auto-Round & Instant Smooth Load (No broken text / icon flash) */
+
+    .nav-logo-img, .footer-logo-img {
+
+      border-radius: 50% !important;
+
+      object-fit: cover !important;
+
+      aspect-ratio: 1 / 1;
+
+      width: 50px;
+
+      height: 50px;
+
+      display: block;
+
+      opacity: 0; /* Hidden by default to prevent corrupt image flash before loading */
+
+      transition: opacity 0.25s ease-in-out;
+
+    }
+
+    /* Footer Logo Position */
+
+    .footer-brand {
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+    }
+
+    .footer-logo-img {
+
+      width: 70px !important;
+
+      height: 70px !important;
+
+      margin: 0 auto 8px auto !important;
+
+    }
+
+    /* Floating Cart Button Styling */
+
+    .floating-cart-btn {
+
+      position: fixed;
+
+      bottom: 25px;
+
+      right: 25px;
+
+      z-index: 999;
+
+      background: var(--primary, #e63946);
+
+      color: #ffffff;
+
+      border: none;
+
+      border-radius: 50%;
+
+      width: 58px;
+
+      height: 58px;
+
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+      cursor: pointer;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 1.4rem;
+
+      transition: transform 0.2s ease, background 0.2s ease;
+
+    }
+
+    .floating-cart-btn:hover {
+
+      transform: scale(1.08);
+
+    }
+
+    .floating-cart-badge {
+
+      position: absolute;
+
+      top: -4px;
+
+      right: -4px;
+
+      background: #ffb703;
+
+      color: #0d1117;
+
+      font-size: 0.75rem;
+
+      font-weight: 700;
+
+      border-radius: 50%;
+
+      width: 22px;
+
+      height: 22px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      border: 2px solid #ffffff;
+
+    }
+
+    /* Aspect Ratio & Mobile Optimization for Gallery Images */
+
+    .gallery-track .gallery-item {
+
+      flex: 0 0 280px;
+
+      width: 280px;
+
+    }
+
+    .gallery-track .gallery-item img {
+
+      width: 100%;
+
+      height: 200px;
+
+      aspect-ratio: 4 / 3;
+
+      object-fit: cover;
+
+      border-radius: 12px;
+
+    }
+
+    @media (max-width: 768px) {
+
+      .gallery-track .gallery-item {
+
+        flex: 0 0 82vw;
+
+        width: 82vw;
+
+        max-width: 320px;
+
+      }
+
+      .gallery-track .gallery-item img {
+
+        height: 180px;
+
+        max-height: 30vh;
+
+        object-fit: contain;
+
+        background: #0f172a;
+
+        border-radius: 10px;
+
+      }
+
+    }
+
+    /* Overlap prevention for item tags on cards without images */
+
+    .card {
+
+      position: relative;
+
+    }
+
+    .card.text-only-card {
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: space-between;
+
+      min-height: 190px;
+
+      padding-top: 42px !important;
+
+    }
+
+    .deal-badge {
+
+      position: absolute;
+
+      top: 10px;
+
+      left: 10px;
+
+      z-index: 5;
+
+    }
+
+    /* In-Page Admin Alert Banner */
+    .admin-alert-banner {
+
+      background: #fef2f2;
+
+      border: 1px solid #fca5a5;
+
+      color: #991b1b;
+
+      padding: 10px 14px;
+
+      border-radius: 8px;
+
+      font-size: 0.85rem;
+
+      font-weight: 600;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      margin-bottom: 15px;
+
+      box-shadow: 0 2px 6px rgba(239, 68, 68, 0.1);
+
+    }
+</style>
+</head>
+<body>
+
+  <!-- Announcement Offer Banner -->
+  <div id="disp-offer-banner" class="offer-banner" style="display: none;"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <img id="nav-logo" src="https://mjlexamazzlswgulbklc.supabase.co/storage/v1/object/public/menu-images/logo.jpg" alt="Restaurant Logo" class="nav-logo-img">
+        <span id="nav-shop-name" class="nav-title">Pizza Website</span>
+      </div>
+
+      <div class="nav-branch-picker">
+        <label for="global-branch-select"><i class="fa-solid fa-store"></i> Branch:</label>
+        <select id="global-branch-select" onchange="onUserBranchChange(this.value)">
+          <!-- Dynamic Branches -->
+        </select>
+      </div>
+
+      <button id="hamburger-btn" class="hamburger" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <nav id="nav-links" class="nav-menu">
+        <a href="#menu-section" class="nav-link-item"><i class="fa-solid fa-utensils"></i> Menu</a>
+        <a href="#about-section" class="nav-link-item"><i class="fa-solid fa-circle-info"></i> About</a>
+        <a href="#gallery-section" class="nav-link-item"><i class="fa-solid fa-images"></i> Gallery</a>
+        <a href="#reviews-section" class="nav-link-item"><i class="fa-solid fa-star"></i> Reviews</a>
+        <a href="#location-section" class="nav-link-item"><i class="fa-solid fa-location-dot"></i> Location</a>
+        <button class="nav-admin-btn" onclick="showLoginModal()"><i class="fa-solid fa-user-gear"></i> Admin</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Banner Section -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div id="store-status-badge" class="status-badge status-open">OPEN NOW</div>
+      <h1 id="disp-hero-title">Hot & Fresh Artisan Pizza</h1>
+      <p id="disp-tagline" class="hero-tagline">Real Crust, Real Taste</p>
+      <p id="disp-hero-desc" class="hero-desc">Hand-tossed dough, signature tomatoes, and 100% real mozzarella baked to perfection.</p>
+      <div class="hero-timing">
+        <i class="fa-regular fa-clock"></i> <span id="disp-timing">11:30 AM To 02:00 AM</span>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#menu-section" class="btn-primary"><i class="fa-solid fa-pizza-slice"></i> View Menu & Order</a>
+        <a id="direct-call-link" href="#" class="btn-secondary"><i class="fa-solid fa-phone"></i> Call Store</a>
+        <a id="shop-map-link" href="#" target="_blank" class="btn-directions"><i class="fa-solid fa-map-location-dot"></i> Get Directions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main class="main-layout">
+
+    <!-- Left / Center Primary Menu Section -->
+    <section id="menu-section" class="menu-section">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-fire-flame-curry"></i> Our Delicious Menu</h2>
+        <p>Freshly baked and served hot to your table or doorstep</p>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="menu-controls">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="menu-search" placeholder="Search pizza, sides, drinks..." oninput="renderMenu()">
+        </div>
+        <div id="customer-category-filters" class="category-filters">
+          <!-- Dynamic Category Tags -->
+        </div>
+      </div>
+
+      <!-- Menu Grid Container -->
+      <div id="menu-container" class="menu-grid">
+        <!-- Dynamic Menu Items -->
+      </div>
+    </section>
+
+    <!-- Right Side Cart & Order Panel -->
+    <aside id="cart-sidebar" class="cart-sidebar">
+      <div class="cart-card">
+        <div class="cart-header">
+          <h3><i class="fa-solid fa-basket-shopping"></i> Your Cart</h3>
+          <span id="cart-item-count" class="badge">0 items</span>
+        </div>
+
+        <div class="order-type-tabs">
+          <button id="tab-del" class="type-btn active" onclick="setOrderType('delivery')">
+            <i class="fa-solid fa-motorcycle"></i> Delivery
+          </button>
+          <button id="tab-take" class="type-btn" onclick="setOrderType('takeaway')">
+            <i class="fa-solid fa-bag-shopping"></i> Take Away
+          </button>
+        </div>
+
+        <ul id="cart-items" class="cart-list">
+          <li style="color: var(--text-muted);">Your order is empty. Select items from the menu to start.</li>
+        </ul>
+
+        <div class="cart-summary">
+          <!-- Dynamic Condition-Based Delivery Note -->
+          <div id="delivery-note-disp" class="delivery-note">
+            💡 Select items to view delivery rates.
+          </div>
+
+          <!-- Customer Order Form Details -->
+          <div class="cart-form">
+            <div class="form-group">
+              <label for="cust-name"><i class="fa-solid fa-user"></i> Your Full Name *</label>
+              <input type="text" id="cust-name" placeholder="Enter your full name">
+            </div>
+
+            <div class="form-group">
+              <label for="cust-branch"><i class="fa-solid fa-store"></i> Select Target Branch</label>
+              <select id="cust-branch" onchange="onCartBranchChange(this.value)">
+                <!-- Dynamic Branches -->
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="whatsapp-select"><i class="fa-brands fa-whatsapp"></i> Order WhatsApp Line</label>
+              <select id="whatsapp-select">
+                <!-- Dynamic Branch Phones -->
+              </select>
+            </div>
+
+            <div id="address-group" class="form-group">
+              <label for="cust-address"><i class="fa-solid fa-house"></i> Delivery Address</label>
+              <textarea id="cust-address" rows="2" placeholder="House/Street/Area details..." oninput="onCustomAddressInputDebounced()"></textarea>
+            </div>
+
+            <div id="location-share-group" class="form-group">
+              <label for="cust-maps-url"><i class="fa-solid fa-map-pin"></i> Google Maps Link / GPS Coordinates</label>
+              <input type="text" id="cust-maps-url" placeholder="Paste Google Maps URL" oninput="updateGpsPreview(this.value)">
+              <button id="btn-fetch-gps" class="btn-gps" onclick="fetchCustomerGPS()">
+                <i class="fa-solid fa-location-crosshairs"></i> Fetch Precise GPS
+              </button>
+            </div>
+          </div>
+
+          <div class="cart-total-bar">
+            <span>Grand Total:</span>
+            <span class="total-amount"><span id="cart-curr-symbol" class="currency-symbol">Rs.</span><span id="cart-total">0</span></span>
+          </div>
+
+          <button id="btn-place-order" class="btn-checkout" onclick="placeOrder()">
+            <i class="fa-brands fa-whatsapp"></i> Confirm & Place Order via WhatsApp
+          </button>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- About Us Section -->
+  <section id="about-section" class="about-section" style="padding: 50px 20px; background: #ffffff;">
+    <div class="container" style="max-width: 900px; margin: 0 auto; text-align: center;">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-circle-info"></i> About Pizza Web</h2>
+        <p id="disp-about-title">Real Crust, Real Taste & Local Love</p>
+      </div>
+      <div class="about-body" style="margin-top: 20px; line-height: 1.8; color: #475569; font-size: 1rem;">
+        <p id="disp-about-desc">
+          Welcome to Pizza Web! We take immense pride in crafting hot, fresh, artisan pizzas prepared daily with hand-kneaded dough, rich signature tomato sauce, and 100% genuine mozzarella. Whether you are dining in or ordering online, quality and taste are guaranteed in every bite.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Public Photo Gallery Section -->
+  <section id="gallery-section" class="gallery-section">
+    <div class="container">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-camera"></i> Our Photo Gallery</h2>
+        <p>A glimpse of our delicious food, kitchen, and atmosphere</p>
+      </div>
+
+      <div class="gallery-wrapper">
+        <button class="gallery-nav prev" onclick="scrollGallery(-1)" aria-label="Previous photos"><i class="fa-solid fa-chevron-left"></i></button>
+        <div id="gallery-container" class="gallery-track">
+          <!-- Dynamic Gallery Items -->
+        </div>
+        <button class="gallery-nav next" onclick="scrollGallery(1)" aria-label="Next photos"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Customer Reviews Section -->
+  <section id="reviews-section" class="reviews-section">
+    <div class="container">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-star-half-stroke"></i> Customer Reviews</h2>
+        <p>See what our valued customers have to say about us</p>
+      </div>
+
+      <div class="reviews-layout">
+        <!-- Review Submission Form -->
+        <div class="review-form-card">
+          <h3>Leave a Review</h3>
+          <div class="form-group">
+            <label for="rev-branch">Branch:</label>
+            <select id="rev-branch">
+              <!-- Dynamic options -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="rev-name">Your Name:</label>
+            <input type="text" id="rev-name" placeholder="Enter your name">
+          </div>
+          <div class="form-group">
+            <label for="rev-rating">Rating:</label>
+            <select id="rev-rating">
+              <option value="5">⭐⭐⭐⭐⭐ 5 Stars (Excellent)</option>
+              <option value="4">⭐⭐⭐⭐ 4 Stars (Very Good)</option>
+              <option value="3">⭐⭐⭐ 3 Stars (Good)</option>
+              <option value="2">⭐⭐ 2 Stars (Average)</option>
+              <option value="1">⭐ 1 Star (Poor)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="rev-comment">Your Review / Feedback:</label>
+            <textarea id="rev-comment" rows="3" placeholder="Write your experience..."></textarea>
+          </div>
+          <button id="btn-submit-review" class="btn-primary" onclick="submitReview()">
+            <i class="fa-solid fa-paper-plane"></i> Submit Review
+          </button>
+        </div>
+
+        <!-- Display Reviews Feed -->
+        <div class="reviews-display-card">
+          <div class="reviews-filter-bar">
+            <label for="viewer-review-branch-filter"><i class="fa-solid fa-filter"></i> Filter Reviews:</label>
+            <select id="viewer-review-branch-filter" onchange="renderReviewsList()">
+              <!-- Dynamic Branch Filters -->
+            </select>
+          </div>
+          <div id="reviews-container" class="reviews-grid">
+            <!-- Dynamic Reviews List -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location & Google Maps Section -->
+  <section id="location-section" class="location-section">
+    <div class="container">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-map-location-dot"></i> Visit Our Location</h2>
+        <p>Find our branches easily or navigate straight to us</p>
+      </div>
+      <div class="map-card">
+        <iframe id="shop-map-iframe" class="map-iframe" src="https://maps.google.com/maps?q=34.3313,73.1980&z=15&output=embed" allowfullscreen="" loading="lazy" title="Restaurant location map"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content" style="text-align: center;">
+      <div class="footer-brand">
+        <img src="https://mjlexamazzlswgulbklc.supabase.co/storage/v1/object/public/menu-images/logo.jpg" alt="Restaurant Logo" class="footer-logo-img" style="margin-bottom: 8px;">
+        <span id="footer-shop-name" class="footer-title">Pizza Web</span>
+        <p id="footer-text-custom">Crafting artisan pizzas with perfection and local love.</p>
+        
+        <!-- Social Media Links Section -->
+        <div class="social-links-section" style="margin: 15px 0;">
+          <h4 style="font-size: 0.95rem; margin-bottom: 10px; color: var(--text-muted, #94a3b8);">Connect With Us</h4>
+          <div style="display: flex; gap: 15px; justify-content: center; font-size: 1.4rem;">
+            <a id="soc-link-fb" href="https://facebook.com" target="_blank" aria-label="Facebook" style="color: #1877f2;"><i class="fa-brands fa-facebook"></i></a>
+            <a id="soc-link-insta" href="https://instagram.com" target="_blank" aria-label="Instagram" style="color: #e4405f;"><i class="fa-brands fa-instagram"></i></a>
+            <a id="soc-link-wa" href="https://wa.me/" target="_blank" aria-label="WhatsApp" style="color: #25d366;"><i class="fa-brands fa-whatsapp"></i></a>
+            <a id="soc-link-tt" href="https://tiktok.com" target="_blank" aria-label="TikTok" style="color: #000000;"><i class="fa-brands fa-tiktok"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        &copy; <span id="year">2026</span> All Rights Reserved. Built with Supabase Engine.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Admin Login Modal -->
+  <div id="modal-login" class="modal-overlay">
+    <div class="modal-container confirm-modal-box" style="max-width: 420px; text-align: left;">
+      <div class="modal-header" style="padding-bottom: 10px; margin-bottom: 15px; border-bottom: 1px solid #e2e8f0;">
+        <h3 style="margin: 0; font-size: 1.2rem; color: var(--primary);"><i class="fa-solid fa-lock"></i> Supabase Admin Authentication</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-login')">&times;</button>
+      </div>
+      <div id="login-error-container" style="display:none; color:#ef4444; background:#fef2f2; border:1px solid #fca5a5; padding:8px 12px; border-radius:6px; font-size:0.8rem; margin-bottom:12px;"></div>
+
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label for="login-email" style="font-size:0.8rem; font-weight:600;"><i class="fa-solid fa-envelope"></i> Email *</label>
+        <input type="email" id="login-email" placeholder="admin@example.com" style="width:100%; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; margin-top:4px;">
+      </div>
+
+      <div class="form-group" style="margin-bottom: 16px;">
+        <label for="login-password" style="font-size:0.8rem; font-weight:600;"><i class="fa-solid fa-key"></i> Password *</label>
+        <input type="password" id="login-password" placeholder="••••••••" style="width:100%; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; margin-top:4px;" onkeyup="if(event.key==='Enter') performSupabaseLogin()">
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:8px;">
+        <button class="btn-secondary" onclick="closeModal('modal-login')" style="padding:6px 14px;">Cancel</button>
+        <button id="btn-do-login" class="btn-primary" onclick="performSupabaseLogin()" style="padding:6px 16px;"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Panel Modal -->
+  <div id="modal-admin" class="modal-overlay">
+    <div class="modal-container admin-modal-box">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-sliders"></i> Store Administration Panel</h3>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <button class="btn-secondary" onclick="logoutSupabase()" style="font-size:0.75rem; padding:4px 10px;"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+          <button class="modal-close-btn" onclick="closeAdminPanelWithPrompt()">&times;</button>
+        </div>
+      </div>
+
+      <!-- In-page Unsaved Changes Notification Alert -->
+      <div id="admin-unsaved-alert" class="admin-alert-banner" style="display: none;">
+        <span><i class="fa-solid fa-triangle-exclamation"></i> You have unsaved changes! Click "Save All Changes to Supabase" to apply them.</span>
+        <button class="btn-save" style="padding: 4px 12px; font-size: 0.75rem;" onclick="saveConfigToSupabase()"><i class="fa-solid fa-floppy-disk"></i> Save Now</button>
+      </div>
+
+      <div class="admin-top-bar">
+        <div class="admin-branch-selector-wrap">
+          <label for="admin-selected-branch-dropdown">Scope Branch Config:</label>
+          <select id="admin-selected-branch-dropdown" onchange="onAdminBranchSelectChange(this.value)">
+            <!-- Options populated dynamically -->
+          </select>
+        </div>
+
+        <div class="admin-actions">
+          <button class="btn-save" onclick="saveConfigToSupabase()"><i class="fa-solid fa-floppy-disk"></i> Save All Changes to Supabase</button>
+        </div>
+      </div>
+
+      <div class="admin-tabs-body">
+
+        <!-- Store Logo Settings Section -->
+        <div class="admin-section-block">
+          <h4 class="admin-sec-title"><i class="fa-solid fa-image"></i> Store Logo Upload & Management</h4>
+          <div class="admin-grid-2">
+            <div>
+              <label for="adm-logo-url">Logo Image Link / URL</label>
+              <input type="text" id="adm-logo-url" placeholder="Paste image link here" oninput="onAdminLogoChange(this.value)">
+            </div>
+            <div>
+              <label for="admin-logo-file">Or Upload Logo Image File</label>
+              <input type="file" id="admin-logo-file" accept="image/*" onchange="uploadAdminLogoFile(this)">
+            </div>
+          </div>
+        </div>
+
+        <!-- Global & Real-time Delivery Charge Configurations -->
+        <div class="admin-section-block">
+          <h4 class="admin-sec-title">🚚 Delivery Rates & Real-Time Calculations (Jointly Managed)</h4>
+          <div class="admin-grid-3">
+            <div>
+              <label for="adm-deliveryMode">Delivery Mode</label>
+              <select id="adm-deliveryMode" onchange="markAdminHasChanges()">
+                <option value="realtime">⚡ Per-KM Realtime Calculation</option>
+                <option value="fixed">📦 Fixed Flat Rate</option>
+                <option value="free">🎁 Always Free Delivery</option>
+                <option value="tiered">📊 Tiered Base Rate</option>
+              </select>
+            </div>
+            <div>
+              <label for="adm-deliveryFee">Fixed / Base Flat Fee (Rs)</label>
+              <input type="number" id="adm-deliveryFee" oninput="markAdminHasChanges()">
+            </div>
+            <div>
+              <label for="adm-perKmRate">Per KM Rate (Rs/KM)</label>
+              <input type="number" id="adm-perKmRate" oninput="markAdminHasChanges()">
+            </div>
+          </div>
+
+          <div class="admin-grid-3" style="margin-top:10px;">
+            <div>
+              <label for="adm-freeDeliveryRadius">Free Delivery KM Radius (X KM tak free)</label>
+              <input type="number" id="adm-freeDeliveryRadius" placeholder="e.g. 2" oninput="markAdminHasChanges()">
+            </div>
+            <div>
+              <label for="adm-freeDeliveryMin">Free Delivery Min Order Total (X Price se upar free)</label>
+              <input type="number" id="adm-freeDeliveryMin" placeholder="e.g. 1500" oninput="markAdminHasChanges()">
+            </div>
+            <div>
+              <label for="adm-tieredMaxKm">Tiered Max KM Base</label>
+              <input type="number" id="adm-tieredMaxKm" oninput="markAdminHasChanges()">
+            </div>
+          </div>
+        </div>
+
+        <!-- Branch Management Section -->
+        <div class="admin-section-block">
+          <h4 class="admin-sec-title">🏢 Branch Management & Override Settings</h4>
+          <div style="display:flex; gap:10px; margin-bottom:12px;">
+            <input type="text" id="admin-add-branch-input" placeholder="New Branch Name (e.g. Branch 3 - North)..." style="flex:1;">
+            <button class="btn-add" onclick="adminAddBranch()">➕ Create New Branch</button>
+          </div>
+
+          <div id="admin-branch-overview">
+            <!-- Branch overrides accordion populated here -->
+          </div>
+        </div>
+
+        <!-- Photo Gallery Management Section -->
+        <div class="admin-section-block">
+          <h4 class="admin-sec-title"><i class="fa-solid fa-images"></i> Manage Photo Gallery</h4>
+          <div class="admin-grid-2">
+            <div>
+              <label for="admin-gallery-url">Image URL / Link</label>
+              <input type="text" id="admin-gallery-url" placeholder="Paste image web link">
+            </div>
+            <div>
+              <label for="admin-gallery-file">Or Upload Image File</label>
+              <input type="file" id="admin-gallery-file" accept="image/*" onchange="uploadImageFile(this, 'admin-gallery-url')">
+            </div>
+          </div>
+          <button type="button" class="btn-add" style="margin-top: 8px;" onclick="adminAddGalleryImage()">
+            <i class="fa-solid fa-plus"></i> Add Image To Gallery
+          </button>
+          
+          <div style="margin-top: 10px; display: flex; gap: 8px; align-items: center; justify-content: space-between; background: #f8fafc; padding: 8px; border-radius: 6px;">
+            <label style="cursor:pointer; display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; font-weight:600;">
+              <input type="checkbox" onchange="toggleSelectAllGallery(this.checked)"> Select All Gallery Images
+            </label>
+            <button class="btn-secondary" onclick="adminBulkDeleteGallery()" style="background:#ef4444; color:white; border:none; padding:4px 10px; border-radius:6px; font-size:0.75rem; cursor:pointer;">
+              <i class="fa-solid fa-trash"></i> Delete Selected Images
+            </button>
+          </div>
+
+          <div id="admin-gallery-list" style="margin-top: 10px; display:flex; flex-wrap:wrap; gap:8px;"></div>
+        </div>
+
+        <!-- Menu Management Section -->
+        <div class="admin-section-block">
+          <h4 class="admin-sec-title">🍕 Menu Item Management</h4>
+          
+          <div class="admin-menu-form">
+            <h5 style="margin-bottom:8px; color:var(--text); font-size:0.9rem;">Add / Edit Menu Item</h5>
+            <div class="admin-grid-3">
+              <div>
+                <label for="menu-form-name">Item Name *</label>
+                <input type="text" id="menu-form-name">
+              </div>
+              <div>
+                <label for="menu-form-price">Price (Rs.) *</label>
+                <input type="number" id="menu-form-price">
+              </div>
+              <div>
+                <label for="menu-form-type">Category *</label>
+                <select id="menu-form-type">
+                  <!-- Dynamic categories -->
+                </select>
+              </div>
+            </div>
+
+            <div class="admin-grid-2" style="margin-top:8px;">
+              <div>
+                <label for="menu-form-desc">Item Description</label>
+                <input type="text" id="menu-form-desc">
+              </div>
+              <div>
+                <label for="menu-form-tag">Deal Tag / Badge (e.g. 20% OFF)</label>
+                <input type="text" id="menu-form-tag">
+              </div>
+            </div>
+
+            <div style="margin-top:8px;">
+              <label for="menu-form-img">Image URL / Supabase Storage Upload (Optional)</label>
+              <div style="display:flex; gap:6px;">
+                <input type="text" id="menu-form-img" placeholder="Paste URL or leave empty for text card" style="flex:1;">
+                <input type="file" accept="image/*" style="font-size:0.75rem;" onchange="uploadFoodImageToSupabase(this, 'menu-form-img', 'menu-img-status')">
+              </div>
+              <small id="menu-img-status" class="upload-status"></small>
+            </div>
+
+            <div style="margin-top:10px;">
+              <label style="font-weight:600; font-size:0.8rem;">Select Branches Where Item is Available:</label>
+              <div id="menu-form-branches-checkboxes" style="display:flex; flex-wrap:wrap; gap:10px; margin-top:4px; font-size:0.8rem;">
+                <!-- Checkboxes populated dynamically -->
+              </div>
+            </div>
+
+            <div style="margin-top:12px; display:flex; gap:10px;">
+              <button class="btn-add" onclick="addOrUpdateMenuItem()"><i class="fa-solid fa-plus"></i> Save Item to Menu</button>
+              <button id="menu-cancel-btn" class="btn-secondary" onclick="cancelEditMenuItem()" hidden>Cancel Editing</button>
+            </div>
+          </div>
+
+          <div style="margin-top:16px; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 8px 12px; border-radius: 6px 6px 0 0; border: 1px solid var(--border); border-bottom: none;">
+            <label style="cursor:pointer; display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; font-weight:600;">
+              <input type="checkbox" onchange="toggleSelectAllMenuItems(this.checked)"> Select All Items
+            </label>
+            <button class="btn-secondary" onclick="adminBulkDeleteMenuItems()" style="background:#ef4444; color:white; border:none; padding:5px 12px; border-radius:6px; font-size:0.75rem; cursor:pointer;">
+              <i class="fa-solid fa-trash"></i> Delete Selected Menu Items
+            </button>
+          </div>
+
+          <div style="overflow-x:auto;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th><i class="fa-solid fa-check-double"></i></th>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Branches</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="menu-table-body">
+                <!-- Dynamic menu table rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Customer Reviews Moderation & Management Section -->
+        <div class="admin-section-block">
+          <h4 class="admin-sec-title"><i class="fa-solid fa-star"></i> Moderate & Filter Customer Reviews</h4>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <label for="admin-review-branch-filter" style="font-weight:600; font-size:0.8rem; margin:0;">Filter Branch:</label>
+              <select id="admin-review-branch-filter" onchange="renderAdminReviewsList()" style="padding:4px 8px; border-radius:6px; border:1px solid #cbd5e1; font-size:0.8rem;">
+                <!-- Options populated dynamically -->
+              </select>
+            </div>
+            <button class="btn-secondary" onclick="adminBulkDeleteReviews()" style="background:#ef4444; color:white; border:none; padding:5px 12px; border-radius:6px; font-size:0.75rem; cursor:pointer;">
+              <i class="fa-solid fa-trash"></i> Delete Selected Reviews
+            </button>
+          </div>
+
+          <div style="margin-bottom:8px; font-size:0.8rem;">
+            <label style="cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
+              <input type="checkbox" onchange="toggleSelectAllReviews(this.checked)"> Select All
+            </label>
+          </div>
+
+          <div id="admin-reviews-list" style="max-height: 220px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; background: #ffffff;">
+            <!-- Reviews populated dynamically -->
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-save" onclick="saveConfigToSupabase()"><i class="fa-solid fa-floppy-disk"></i> Save All Changes to Supabase</button>
+        <button class="btn-secondary" onclick="closeAdminPanelWithPrompt()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- In-Page Confirmation Dialog Modal -->
+  <div id="modal-confirm" class="modal-overlay" style="z-index: 10000; display: none;">
+    <div class="modal-container confirm-modal-box" style="max-width: 380px; text-align: center; padding: 20px;">
+      <i id="confirm-modal-icon" class="fa-solid fa-circle-question" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 12px;"></i>
+      <h3 id="confirm-modal-title" style="margin-bottom: 8px; font-size: 1.1rem; color: var(--text);">Confirm Action</h3>
+      <p id="confirm-modal-msg" style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5;">Are you sure you want to proceed?</p>
+      <div style="display: flex; justify-content: center; gap: 10px;">
+        <button id="confirm-modal-cancel-btn" class="btn-secondary" style="padding: 6px 16px;">Cancel</button>
+        <button id="confirm-modal-ok-btn" class="btn-primary" style="padding: 6px 18px; background: #ef4444; border-color: #ef4444;">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Cart Button -->
+  <button id="floating-cart-btn" class="floating-cart-btn" onclick="scrollToCart()" aria-label="View Cart">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span id="floating-cart-count" class="floating-cart-badge">0</span>
+  </button>
+
+  <!-- Toast Notification Bar -->
+  <div id="toast-msg" class="toast-msg"></div>
+
+  <script src="script.js"></script>
+
+  <!-- Helper Script for Floating Cart Badge Sync & Navigation -->
+  <script>
+    function scrollToCart() {
+      const cartEl = document.getElementById('cart-sidebar');
+      if (cartEl) cartEl.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    const cartObserver = new MutationObserver(() => {
+      const cartCountEl = document.getElementById('cart-item-count');
+      const floatBadge = document.getElementById('floating-cart-count');
+      if (cartCountEl && floatBadge) {
+        const count = parseInt(cartCountEl.innerText) || 0;
+        floatBadge.innerText = count;
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const cartCountEl = document.getElementById('cart-item-count');
+      if (cartCountEl) {
+        cartObserver.observe(cartCountEl, { childList: true, characterData: true, subtree: true });
+      }
+    });
+  </script>
+</body>
+</html>
