@@ -7,6 +7,7 @@
    - Admin Reviews Moderation (Filter by Branch & Delete/Bulk Delete)
    - Realtime Delivery Rate Calculation & Dynamic Cart Fee Logic
    - Supabase Realtime & LocalStorage Sync
+   - Dynamic Category Add & Remove System
    - Complete Admin Panel CRUD with In-Page Notifications & Staged Unsaved Changes
    ========================================================================== */
 
@@ -1541,6 +1542,7 @@ function populateAdminFields() {
   renderMenuBranchCheckboxes();
   renderAdminMenuTable();
   renderAdminCategoryTags();
+  renderAdminCategoryManager();
   renderAdminReviewsList();
   renderAdminGalleryManager();
 
@@ -1768,6 +1770,73 @@ function renderAdminCategoryTags() {
     html += `<option value="${escapeHTML(c.key)}">${escapeHTML(c.label)}</option>`;
   });
   sel.innerHTML = html;
+}
+
+// --- Dynamic Category Management System (Add / Remove) ---
+function renderAdminCategoryManager() {
+  const container = document.getElementById('admin-category-list');
+  if (!container) return;
+
+  let html = '';
+  (config.customCategories || []).forEach(c => {
+    html += `
+    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-subtle); padding:6px 12px; border-radius:6px; margin-bottom:6px; border:1px solid var(--border);">
+      <span style="font-size:0.85rem; font-weight:600;">${escapeHTML(c.label)} <small style="color:var(--text-muted); font-weight:normal;">(${escapeHTML(c.key)})</small></span>
+      <button onclick="adminDeleteCategory('${escapeHTML(c.key)}')" style="background:#ef4444; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;" title="Delete Category"><i class="fa-solid fa-trash"></i></button>
+    </div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function adminAddCategory() {
+  const labelInput = document.getElementById('admin-cat-label');
+  const keyInput = document.getElementById('admin-cat-key');
+
+  const label = labelInput ? labelInput.value.trim() : '';
+  let key = keyInput ? keyInput.value.trim().toLowerCase().replace(/\s+/g, '_') : '';
+
+  if (!label) {
+    showToast("Please enter category name.", true);
+    return;
+  }
+
+  if (!key) {
+    key = label.toLowerCase().replace(/[^a-z0-9]/g, '_');
+  }
+
+  if (!Array.isArray(config.customCategories)) config.customCategories = [];
+  if (config.customCategories.some(c => c.key === key)) {
+    showToast("Category key already exists.", true);
+    return;
+  }
+
+  config.customCategories.push({ key, label });
+
+  if (labelInput) labelInput.value = '';
+  if (keyInput) keyInput.value = '';
+
+  markAdminHasChanges();
+  renderAdminCategoryManager();
+  renderAdminCategoryTags();
+  renderMenu();
+  showToast("✓ Food category added successfully!");
+}
+
+function adminDeleteCategory(catKey) {
+  if ((config.customCategories || []).length <= 1) {
+    showToast("At least one food category must remain!", true);
+    return;
+  }
+
+  showConfirmationModal("Delete Food Category", `Are you sure you want to delete category "${catKey}"?`, () => {
+    config.customCategories = (config.customCategories || []).filter(c => c.key !== catKey);
+    markAdminHasChanges();
+    renderAdminCategoryManager();
+    renderAdminCategoryTags();
+    renderMenu();
+    showToast("✓ Category removed successfully!");
+  });
 }
 
 function renderMenuBranchCheckboxes() {
