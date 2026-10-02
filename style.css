@@ -2,6 +2,11 @@
    PERMANENT LIGHT THEME STYLESHEET - FULLY RESPONSIVE
    ========================================================================== */
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
 :root {
   --primary: #e63946;
   --primary-hover: #d62839;
