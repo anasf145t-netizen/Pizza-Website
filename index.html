@@ -41,245 +41,140 @@
 
   <link rel="stylesheet" href="style.css">
   
-<style>
-
+  <style>
     /* Logo Auto-Round & Instant Smooth Load (No broken text / icon flash) */
-
     .nav-logo-img, .footer-logo-img {
-
       border-radius: 50% !important;
-
       object-fit: cover !important;
-
       aspect-ratio: 1 / 1;
-
       width: 50px;
-
       height: 50px;
-
       display: block;
-
       opacity: 0; /* Hidden by default to prevent corrupt image flash before loading */
-
       transition: opacity 0.25s ease-in-out;
-
     }
 
     /* Footer Logo Position */
-
     .footer-brand {
-
       display: flex;
-
       flex-direction: column;
-
       align-items: center;
-
     }
 
     .footer-logo-img {
-
       width: 70px !important;
-
       height: 70px !important;
-
       margin: 0 auto 8px auto !important;
-
     }
 
     /* Floating Cart Button Styling */
-
     .floating-cart-btn {
-
       position: fixed;
-
       bottom: 25px;
-
       right: 25px;
-
       z-index: 999;
-
       background: var(--primary, #e63946);
-
       color: #ffffff;
-
       border: none;
-
       border-radius: 50%;
-
       width: 58px;
-
       height: 58px;
-
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-
       cursor: pointer;
-
       display: flex;
-
       align-items: center;
-
       justify-content: center;
-
       font-size: 1.4rem;
-
       transition: transform 0.2s ease, background 0.2s ease;
-
     }
 
     .floating-cart-btn:hover {
-
       transform: scale(1.08);
-
     }
 
     .floating-cart-badge {
-
       position: absolute;
-
       top: -4px;
-
       right: -4px;
-
       background: #ffb703;
-
       color: #0d1117;
-
       font-size: 0.75rem;
-
       font-weight: 700;
-
       border-radius: 50%;
-
       width: 22px;
-
       height: 22px;
-
       display: flex;
-
       align-items: center;
-
       justify-content: center;
-
       border: 2px solid #ffffff;
-
     }
 
     /* Aspect Ratio & Mobile Optimization for Gallery Images */
-
     .gallery-track .gallery-item {
-
       flex: 0 0 280px;
-
       width: 280px;
-
     }
 
     .gallery-track .gallery-item img {
-
       width: 100%;
-
       height: 200px;
-
       aspect-ratio: 4 / 3;
-
       object-fit: cover;
-
       border-radius: 12px;
-
     }
 
     @media (max-width: 768px) {
-
       .gallery-track .gallery-item {
-
         flex: 0 0 82vw;
-
         width: 82vw;
-
         max-width: 320px;
-
       }
 
       .gallery-track .gallery-item img {
-
         height: 180px;
-
         max-height: 30vh;
-
         object-fit: contain;
-
         background: #0f172a;
-
         border-radius: 10px;
-
       }
-
     }
 
     /* Overlap prevention for item tags on cards without images */
-
     .card {
-
       position: relative;
-
     }
 
     .card.text-only-card {
-
       display: flex;
-
       flex-direction: column;
-
       justify-content: space-between;
-
       min-height: 190px;
-
       padding-top: 42px !important;
-
     }
 
     .deal-badge {
-
       position: absolute;
-
       top: 10px;
-
       left: 10px;
-
       z-index: 5;
-
     }
 
     /* In-Page Admin Alert Banner */
     .admin-alert-banner {
-
       background: #fef2f2;
-
       border: 1px solid #fca5a5;
-
       color: #991b1b;
-
       padding: 10px 14px;
-
       border-radius: 8px;
-
       font-size: 0.85rem;
-
       font-weight: 600;
-
       display: flex;
-
       align-items: center;
-
       justify-content: space-between;
-
       margin-bottom: 15px;
-
       box-shadow: 0 2px 6px rgba(239, 68, 68, 0.1);
-
     }
-</style>
+  </style>
 </head>
 <body>
 
@@ -720,6 +615,25 @@
           </div>
 
           <div id="admin-gallery-list" style="margin-top: 10px; display:flex; flex-wrap:wrap; gap:8px;"></div>
+        </div>
+
+        <!-- Admin Panel: Food Category Manager Block -->
+        <div class="admin-section-block" style="background:#ffffff; border:1px solid var(--border); border-radius:8px; padding:14px; margin-bottom:12px;">
+          <h5 style="margin:0 0 10px 0; font-size:0.95rem; color:var(--primary);">
+            <i class="fa-solid fa-layer-group"></i> Food Categories Management
+          </h5>
+
+          <div id="admin-category-list" style="margin-bottom:10px;">
+            <!-- Categories dynamically rendered here -->
+          </div>
+
+          <div style="display:flex; gap:6px;">
+            <input type="text" id="admin-cat-label" placeholder="Category Name (e.g. Desserts)" style="flex:1;">
+            <input type="text" id="admin-cat-key" placeholder="Key (optional, e.g. dessert)" style="flex:1;">
+            <button onclick="adminAddCategory()" style="background:#10b981; color:white; border:none; padding:8px 14px; border-radius:6px; font-weight:600; cursor:pointer;">
+              + Add Category
+            </button>
+          </div>
         </div>
 
         <!-- Menu Management Section -->
