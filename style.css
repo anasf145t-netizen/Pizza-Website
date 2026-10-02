@@ -1,13 +1,12 @@
 /* ==========================================================================
-   PERMANENT LIGHT THEME STYLESHEET - 100% ZERO HORIZONTAL OVERFLOW RESPONSIVE
+   PERMANENT LIGHT THEME STYLESHEET - FULLY RESPONSIVE & MOBILE FIXES
    ========================================================================== */
 
-html, body {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden !important;
+html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
+  overflow-x: clip;
+  width: 100%;
 }
 
 :root {
@@ -26,9 +25,9 @@ html, body {
   --hero-bg: url('https://mjlexamazzlswgulbklc.supabase.co/storage/v1/object/public/menu-images/pexels-anhelina-vasylyk-734724285-33593003.jpg');
 }
 
-/* Strict Global Box Sizing Reset */
-*, *::before, *::after {
-  box-sizing: border-box !important;
+/* Force Reset */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: 'Poppins', system-ui, -apple-system, sans-serif;
@@ -39,15 +38,17 @@ body {
   color: var(--text);
   line-height: 1.5;
   min-height: 100vh;
+  overflow-x: clip;
+  width: 100%;
+  position: relative;
 }
 
-/* Ensure Media Elements Never Exceed Parent Boundaries */
-img, video, iframe, canvas, svg, table {
-  max-width: 100% !important;
+img, video, iframe {
+  max-width: 100%;
   height: auto;
 }
 
-/* Top Offer Announcement Banner */
+/* Offer Banner */
 .offer-banner {
   background-color: var(--accent);
   color: #1e293b;
@@ -57,15 +58,17 @@ img, video, iframe, canvas, svg, table {
   font-size: 0.85rem;
   letter-spacing: 0.5px;
   width: 100%;
+  word-break: break-word;
 }
 
-/* Sticky Navigation Bar */
+/* Navigation Bar (Sticky for all devices) */
 .navbar {
   background-color: #ffffff;
   border-bottom: 1px solid var(--border);
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
   box-shadow: var(--shadow);
   width: 100%;
 }
@@ -77,10 +80,11 @@ img, video, iframe, canvas, svg, table {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
 }
 
+/* Business Name & Header Elements */
 .nav-brand {
   display: flex;
   align-items: center;
@@ -91,18 +95,20 @@ img, video, iframe, canvas, svg, table {
 }
 
 .nav-logo-img {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 50% !important;
   object-fit: cover !important;
   aspect-ratio: 1 / 1;
   border: 2px solid var(--primary);
   display: block;
+  opacity: 1;
+  transition: opacity 0.25s ease-in-out;
   flex-shrink: 0;
 }
 
 .nav-title {
-  font-size: clamp(0.9rem, 3vw, 1.25rem);
+  font-size: clamp(0.85rem, 3.5vw, 1.25rem);
   font-weight: 800;
   color: var(--primary);
   letter-spacing: 0.3px;
@@ -115,7 +121,7 @@ img, video, iframe, canvas, svg, table {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 600;
   background: var(--bg-subtle);
   padding: 5px 8px;
@@ -132,8 +138,9 @@ img, video, iframe, canvas, svg, table {
   color: var(--text);
   cursor: pointer;
   outline: none;
-  font-size: 0.8rem;
-  max-width: 105px;
+  font-size: 0.82rem;
+  max-width: 110px;
+  text-overflow: ellipsis;
 }
 
 .nav-menu {
@@ -185,7 +192,7 @@ img, video, iframe, canvas, svg, table {
   flex-shrink: 0;
 }
 
-/* Hero Section Header */
+/* Hero Section */
 .hero-section {
   position: relative;
   background-image: var(--hero-bg);
@@ -200,7 +207,7 @@ img, video, iframe, canvas, svg, table {
 .hero-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.62);
+  background: rgba(0, 0, 0, 0.58);
 }
 
 .hero-content {
@@ -214,7 +221,7 @@ img, video, iframe, canvas, svg, table {
   display: inline-block;
   padding: 4px 14px;
   border-radius: 20px;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 800;
   margin-bottom: 12px;
   letter-spacing: 0.8px;
@@ -231,17 +238,19 @@ img, video, iframe, canvas, svg, table {
 }
 
 .hero-tagline {
-  font-size: clamp(0.95rem, 3vw, 1.25rem);
+  font-size: clamp(0.95rem, 3vw, 1.3rem);
   font-weight: 600;
   color: var(--accent);
   margin-bottom: 10px;
 }
 
 .hero-desc {
-  font-size: clamp(0.82rem, 2vw, 0.95rem);
-  opacity: 0.92;
-  margin: 0 auto 18px auto;
+  font-size: clamp(0.82rem, 2vw, 1rem);
+  opacity: 0.9;
+  margin-bottom: 18px;
   max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero-timing {
@@ -252,7 +261,7 @@ img, video, iframe, canvas, svg, table {
   padding: 6px 14px;
   border-radius: 20px;
   backdrop-filter: blur(4px);
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .hero-actions {
@@ -260,51 +269,81 @@ img, video, iframe, canvas, svg, table {
   justify-content: center;
   gap: 10px;
   flex-wrap: wrap;
-  width: 100%;
 }
 
-/* Professional Buttons */
-.btn-primary, .btn-secondary, .btn-directions {
-  padding: 10px 18px;
+/* Button UI Components */
+.btn-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
   border-radius: 25px;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   text-decoration: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: all 0.2s ease;
-  white-space: nowrap;
+  transition: background 0.2s;
 }
 
-.btn-primary { background-color: var(--primary); color: #ffffff; border: none; }
 .btn-primary:hover { background-color: var(--primary-hover); }
 
-.btn-secondary { background-color: #ffffff; color: var(--text); border: 1px solid var(--border); }
+.btn-secondary {
+  background-color: #ffffff;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
 .btn-secondary:hover { background-color: var(--bg-subtle); }
 
-.btn-directions { background-color: #0284c7; color: #ffffff; border: none; }
+.btn-directions {
+  background-color: #0284c7;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
 .btn-directions:hover { background-color: #0369a1; }
 
-/* Main Layout Grid Structure */
+/* Main Layout Grid */
 .main-layout {
   max-width: 1200px;
   margin: 24px auto;
   padding: 0 16px;
   display: grid;
-  grid-template-columns: 1fr 350px;
+  grid-template-columns: 1fr 360px;
   gap: 24px;
   width: 100%;
 }
 
 .section-header {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .section-header h2 {
-  font-size: clamp(1.2rem, 3.5vw, 1.55rem);
+  font-size: clamp(1.2rem, 3.5vw, 1.6rem);
   color: var(--text);
   display: flex;
   align-items: center;
@@ -313,12 +352,12 @@ img, video, iframe, canvas, svg, table {
 
 .section-header p {
   color: var(--text-muted);
-  font-size: 0.85rem;
+  font-size: 0.88rem;
 }
 
 /* Menu Controls & Filters */
 .menu-controls {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   width: 100%;
 }
 
@@ -350,7 +389,7 @@ img, video, iframe, canvas, svg, table {
 .category-filters {
   display: flex;
   gap: 8px;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   overflow-x: auto;
   padding-bottom: 6px;
   width: 100%;
@@ -367,7 +406,7 @@ img, video, iframe, canvas, svg, table {
   border: 1px solid var(--border);
   padding: 6px 14px;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
@@ -381,10 +420,10 @@ img, video, iframe, canvas, svg, table {
   border-color: var(--primary);
 }
 
-/* Menu Grid & Item Cards */
+/* Menu Grid & Item Cards Professional Styling */
 .menu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
   width: 100%;
 }
@@ -414,9 +453,9 @@ img, video, iframe, canvas, svg, table {
   left: 8px;
   background-color: var(--primary);
   color: #ffffff;
-  font-size: 0.65rem;
+  font-size: 0.68rem;
   font-weight: 800;
-  padding: 3px 7px;
+  padding: 3px 8px;
   border-radius: 4px;
   z-index: 2;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -431,23 +470,25 @@ img, video, iframe, canvas, svg, table {
 }
 
 .card h3 {
-  font-size: 0.92rem;
-  padding: 10px 10px 4px;
+  font-size: 0.95rem;
+  padding: 10px 12px 4px;
   color: var(--text);
   font-weight: 700;
   line-height: 1.3;
+  word-break: break-word;
 }
 
 .card p {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
-  padding: 0 10px 10px;
+  padding: 0 12px 10px;
   flex: 1;
   line-height: 1.4;
+  word-break: break-word;
 }
 
 .card-footer {
-  padding: 10px;
+  padding: 10px 12px;
   border-top: 1px solid var(--bg-subtle);
   display: flex;
   align-items: center;
@@ -469,7 +510,7 @@ img, video, iframe, canvas, svg, table {
   border: none;
   padding: 6px 12px;
   border-radius: 6px;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
@@ -478,8 +519,49 @@ img, video, iframe, canvas, svg, table {
 
 .btn-add:hover { background-color: var(--primary-hover); }
 
-/* Right Cart Sidebar */
+.btn-add:disabled {
+  background-color: var(--border);
+  cursor: not-allowed;
+}
+
+/* Mobile Food Items: 2 items per line on mobile screens */
+@media (max-width: 600px) {
+  .menu-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .card h3 {
+    font-size: 0.85rem;
+    padding: 8px 8px 2px;
+  }
+
+  .card p {
+    font-size: 0.72rem;
+    padding: 0 8px 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-footer {
+    padding: 8px;
+  }
+
+  .price-tag {
+    font-size: 0.85rem;
+  }
+
+  .btn-add {
+    padding: 5px 8px;
+    font-size: 0.72rem;
+  }
+}
+
+/* Cart Sidebar */
 .cart-sidebar {
+  position: -webkit-sticky;
   position: sticky;
   top: 75px;
   height: fit-content;
@@ -518,7 +600,6 @@ img, video, iframe, canvas, svg, table {
   grid-template-columns: 1fr 1fr;
   gap: 8px;
   margin-bottom: 12px;
-  width: 100%;
 }
 
 .type-btn {
@@ -530,7 +611,6 @@ img, video, iframe, canvas, svg, table {
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
-  width: 100%;
 }
 
 .type-btn.active {
@@ -541,7 +621,7 @@ img, video, iframe, canvas, svg, table {
 
 .cart-list {
   list-style: none;
-  max-height: 220px;
+  max-height: 240px;
   overflow-y: auto;
   margin-bottom: 12px;
 }
@@ -553,7 +633,6 @@ img, video, iframe, canvas, svg, table {
   padding: 8px 0;
   border-bottom: 1px solid var(--bg-subtle);
   font-size: 0.82rem;
-  gap: 8px;
 }
 
 .qty-controls {
@@ -576,7 +655,7 @@ img, video, iframe, canvas, svg, table {
 }
 
 .qty-input {
-  width: 28px;
+  width: 30px;
   text-align: center;
   border: 1px solid var(--border);
   border-radius: 4px;
@@ -592,6 +671,7 @@ img, video, iframe, canvas, svg, table {
   border-radius: 6px;
   font-size: 0.78rem;
   margin-bottom: 12px;
+  word-break: break-word;
 }
 
 .cart-form .form-group {
@@ -613,6 +693,7 @@ img, video, iframe, canvas, svg, table {
   font-size: 0.82rem;
   background-color: #ffffff;
   color: var(--text);
+  box-sizing: border-box;
 }
 
 .btn-gps {
@@ -634,7 +715,7 @@ img, video, iframe, canvas, svg, table {
   padding: 10px 0;
   border-top: 2px solid var(--border);
   font-weight: 700;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
 }
 
 .total-amount {
@@ -650,7 +731,7 @@ img, video, iframe, canvas, svg, table {
   padding: 12px;
   border-radius: 8px;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -668,15 +749,19 @@ img, video, iframe, canvas, svg, table {
   color: #ffffff;
   border: none;
   border-radius: 50%;
-  width: 54px;
-  height: 54px;
+  width: 56px;
+  height: 56px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   transition: transform 0.2s ease;
+}
+
+.floating-cart-btn:hover {
+  transform: scale(1.08);
 }
 
 .floating-cart-badge {
@@ -696,7 +781,7 @@ img, video, iframe, canvas, svg, table {
   border: 2px solid #ffffff;
 }
 
-/* About Us Section */
+/* Clean & Modern About Us Section */
 .about-section {
   padding: 40px 16px;
   background: #ffffff;
@@ -705,15 +790,17 @@ img, video, iframe, canvas, svg, table {
 }
 
 .about-body {
-  margin: 16px auto 0 auto;
+  margin-top: 16px;
   line-height: 1.7;
   color: #475569;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
 }
 
-/* Photo Gallery Section - No Side Bleed */
+/* Photo Gallery Section */
 .gallery-section {
   padding: 40px 16px;
   background-color: var(--bg-main);
@@ -732,12 +819,12 @@ img, video, iframe, canvas, svg, table {
 
 .gallery-track {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   overflow-x: auto;
   scroll-behavior: smooth;
   padding: 8px 0;
-  width: 100%;
   scrollbar-width: none;
+  width: 100%;
 }
 
 .gallery-track::-webkit-scrollbar {
@@ -745,8 +832,8 @@ img, video, iframe, canvas, svg, table {
 }
 
 .gallery-track .gallery-item {
-  flex: 0 0 250px;
-  width: 250px;
+  flex: 0 0 260px;
+  width: 260px;
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--border);
@@ -755,7 +842,7 @@ img, video, iframe, canvas, svg, table {
 
 .gallery-track .gallery-item img {
   width: 100%;
-  height: 180px;
+  height: 185px;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   display: block;
@@ -767,8 +854,8 @@ img, video, iframe, canvas, svg, table {
   transform: translateY(-50%);
   background: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--border);
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   cursor: pointer;
   z-index: 10;
@@ -778,10 +865,20 @@ img, video, iframe, canvas, svg, table {
   box-shadow: var(--shadow);
 }
 
-.gallery-nav.prev { left: 4px; }
-.gallery-nav.next { right: 4px; }
+.gallery-nav.prev { left: -12px; }
+.gallery-nav.next { right: -12px; }
 
-/* Customer Reviews Section */
+@media (max-width: 600px) {
+  .gallery-track .gallery-item {
+    flex: 0 0 200px;
+    width: 200px;
+  }
+  .gallery-track .gallery-item img {
+    height: 145px;
+  }
+}
+
+/* Reviews Section */
 .reviews-section {
   padding: 40px 16px;
   background-color: #ffffff;
@@ -808,7 +905,7 @@ img, video, iframe, canvas, svg, table {
 
 .review-form-card h3 {
   margin-bottom: 12px;
-  font-size: 0.98rem;
+  font-size: 1rem;
 }
 
 .review-form-card .form-group {
@@ -829,6 +926,7 @@ img, video, iframe, canvas, svg, table {
   border-radius: 6px;
   font-size: 0.82rem;
   background-color: #ffffff;
+  box-sizing: border-box;
 }
 
 .reviews-filter-bar {
@@ -838,6 +936,7 @@ img, video, iframe, canvas, svg, table {
   margin-bottom: 12px;
   font-size: 0.82rem;
   font-weight: 600;
+  flex-wrap: wrap;
 }
 
 .reviews-filter-bar select {
@@ -849,7 +948,7 @@ img, video, iframe, canvas, svg, table {
 
 .reviews-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 12px;
   width: 100%;
 }
@@ -860,10 +959,10 @@ img, video, iframe, canvas, svg, table {
   padding: 12px;
   border-radius: 8px;
   font-size: 0.82rem;
-  width: 100%;
+  word-break: break-word;
 }
 
-/* Location Section */
+/* Location & Map */
 .location-section {
   padding: 40px 16px;
   background-color: var(--bg-main);
@@ -887,7 +986,7 @@ img, video, iframe, canvas, svg, table {
   border: none;
 }
 
-/* Footer Section */
+/* Footer & Logo Circular Border Ring */
 .footer {
   background-color: #ffffff;
   border-top: 1px solid var(--border);
@@ -903,19 +1002,20 @@ img, video, iframe, canvas, svg, table {
 }
 
 .footer-logo-img {
-  width: 60px !important;
-  height: 60px !important;
+  width: 64px !important;
+  height: 64px !important;
   border-radius: 50% !important;
   border: 2px solid var(--primary) !important;
   object-fit: cover !important;
   aspect-ratio: 1 / 1;
   margin: 0 auto 8px auto !important;
   display: block;
+  opacity: 1;
   box-shadow: 0 3px 8px rgba(0,0,0,0.1);
 }
 
 .footer-title {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--primary);
 }
@@ -926,18 +1026,18 @@ img, video, iframe, canvas, svg, table {
   margin-top: 15px;
 }
 
-/* Admin & Login Modals */
+/* Modal Overlay & General Admin Panel Box */
 .modal-overlay {
   display: none;
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   background-color: rgba(15, 23, 42, 0.65);
   backdrop-filter: blur(4px);
-  z-index: 1000;
+  z-index: 2000;
   align-items: center;
   justify-content: center;
-  padding: 10px;
-  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
 }
 
 .admin-modal-box {
@@ -963,7 +1063,7 @@ img, video, iframe, canvas, svg, table {
 }
 
 .modal-header h3 {
-  font-size: 1rem;
+  font-size: 1.05rem;
 }
 
 .modal-close-btn {
@@ -989,7 +1089,7 @@ img, video, iframe, canvas, svg, table {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 600;
 }
 
@@ -1000,7 +1100,7 @@ img, video, iframe, canvas, svg, table {
 }
 
 .admin-tabs-body {
-  padding: 14px;
+  padding: 16px;
   overflow-y: auto;
   flex: 1;
 }
@@ -1009,13 +1109,12 @@ img, video, iframe, canvas, svg, table {
   background-color: var(--bg-main);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 14px;
-  width: 100%;
+  padding: 14px;
+  margin-bottom: 16px;
 }
 
 .admin-sec-title {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   color: var(--text);
   margin-bottom: 10px;
   padding-bottom: 6px;
@@ -1031,7 +1130,7 @@ img, video, iframe, canvas, svg, table {
 
 .admin-grid-3 {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
 }
 
@@ -1046,18 +1145,33 @@ img, video, iframe, canvas, svg, table {
 .admin-section-block select, 
 .admin-section-block textarea {
   width: 100%;
-  padding: 8px;
+  padding: 8px 10px;
   border: 1px solid var(--border);
   border-radius: 6px;
   font-size: 0.82rem;
   background-color: #ffffff;
   color: var(--text);
+  box-sizing: border-box;
 }
 
+/* Admin Item Form URL / Link Input Box Fix */
+.admin-menu-form input[type="text"],
+.admin-menu-form select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#menu-form-img {
+  width: 100% !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+/* Table styling for menu management */
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
 }
 
 .admin-table th, .admin-table td {
@@ -1090,7 +1204,7 @@ img, video, iframe, canvas, svg, table {
   width: 100%;
 }
 
-/* Toast Bar */
+/* Toast Notifications */
 .toast-msg {
   position: fixed;
   bottom: 20px;
@@ -1101,15 +1215,14 @@ img, video, iframe, canvas, svg, table {
   border-radius: 8px;
   font-size: 0.85rem;
   font-weight: 500;
-  z-index: 2000;
+  z-index: 3000;
   display: none;
   box-shadow: var(--shadow-lg);
-  max-width: 90vw;
 }
 
 .toast-msg.error { background-color: #ef4444; }
 
-/* Unsaved Changes Alert */
+/* In-Page Admin Alert Banner */
 .admin-alert-banner {
   background: #fef2f2;
   border: 1px solid #fca5a5;
@@ -1124,11 +1237,8 @@ img, video, iframe, canvas, svg, table {
   margin-bottom: 12px;
 }
 
-/* ==========================================================================
-   COMPREHENSIVE DEVICE BREAKPOINTS (MOBILES, TABLETS, FOLDS)
-   ========================================================================== */
-
-@media (max-width: 880px) {
+/* Comprehensive Responsive Breakpoints */
+@media (max-width: 850px) {
   .main-layout {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -1139,7 +1249,9 @@ img, video, iframe, canvas, svg, table {
   }
 
   .hamburger {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .nav-menu {
@@ -1148,6 +1260,7 @@ img, video, iframe, canvas, svg, table {
     top: 100%;
     left: 0;
     right: 0;
+    width: 100%;
     background-color: #ffffff;
     flex-direction: column;
     padding: 16px;
@@ -1166,92 +1279,53 @@ img, video, iframe, canvas, svg, table {
   }
 }
 
-/* Mobile Devices Optimization (Phones & Small Screens) */
-@media (max-width: 600px) {
-  .menu-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 6px 10px;
+    gap: 6px;
   }
 
-  .card h3 {
-    font-size: 0.82rem;
-    padding: 8px 8px 2px;
+  .nav-logo-img {
+    width: 36px;
+    height: 36px;
   }
 
-  .card p {
-    font-size: 0.72rem;
-    padding: 0 8px 8px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .card-footer {
-    padding: 8px;
-  }
-
-  .price-tag {
+  .nav-title {
     font-size: 0.85rem;
   }
 
-  .btn-add {
-    padding: 5px 8px;
-    font-size: 0.72rem;
-  }
-
-  .hero-section {
-    padding: 36px 12px;
-  }
-
-  .hero-actions {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .btn-primary, .btn-secondary, .btn-directions {
-    width: 100%;
-  }
-
-  .gallery-track .gallery-item {
-    flex: 0 0 190px;
-    width: 190px;
-  }
-
-  .gallery-track .gallery-item img {
-    height: 140px;
-  }
-
-  .map-card {
-    height: 250px;
-  }
-}
-
-/* Ultra-Small Mobile Phones (e.g. Galaxy Fold closed, iPhone SE) */
-@media (max-width: 380px) {
-  .nav-container {
-    padding: 8px 8px;
-  }
-
   .nav-branch-picker {
-    padding: 3px 6px;
+    padding: 4px 6px;
     font-size: 0.72rem;
   }
 
   .nav-branch-picker select {
     font-size: 0.72rem;
-    max-width: 75px;
+    max-width: 80px;
   }
 
-  .menu-grid {
-    grid-template-columns: 1fr;
+  .hamburger {
+    font-size: 1.3rem;
+    padding: 2px;
+  }
+
+  .hero-section {
+    padding: 35px 12px;
   }
 
   .modal-overlay {
-    padding: 4px;
+    padding: 6px;
   }
 
   .admin-modal-box {
-    max-height: 98vh;
+    max-height: 96vh;
+  }
+
+  .admin-tabs-body {
+    padding: 10px;
+  }
+
+  .admin-section-block {
+    padding: 10px;
   }
 }
